@@ -12,12 +12,12 @@ alpha_vantage_tuple = av_gmail_credentials.get_daily_adjusted(symbol='AAPL', out
 #print(alpha_vantage_tuple[0])
 #print(alpha_vantage_tuple[1])
 
-#alpha_vantage_df1 = alpha_vantage_tuple[0]
+alpha_vantage_df1 = alpha_vantage_tuple[0]
 #type(alpha_vantage_df1)
 
 #See names of dataframe columns
 #print(alpha_vantage_df1.columns)
 
 #Select certain columns to be in a new dataframe
-#alpha_vantage_df2 = alpha_vantage_df1[['1. open', '2. high', '3. low', '4. close', '6. volume']]
-#print(alpha_vantage_df2)
+alpha_vantage_df2 = alpha_vantage_df1[['1. open', '2. high', '3. low', '4. close', '6. volume']]
+print(alpha_vantage_df2)
