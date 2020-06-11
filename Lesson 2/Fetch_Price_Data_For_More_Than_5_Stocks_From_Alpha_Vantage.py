@@ -9,7 +9,7 @@ import time
 #pd.set_option('display.max_columns', 999)
 #pd.set_option('display.max_rows', 50000)
 
-av_gmail_credentials = TimeSeries(key='CZ3CF3EP5MPJFFRZ', output_format='pandas')
+av_gmail_credentials = TimeSeries(key='YOUR_API_KEY', output_format='pandas')
 
 symbols_list = ['AAPL', 'BMY', 'CSCO', 'EOG', 'F', 'FB', 'GE', 'MLM', 'MSFT', 'NVDA', 'TNK', 'XOM']
 #symbols_list_of_lists = [['AAPL', 'BMY', 'CSCO', 'EOG', 'F'], ['FB', 'GE', 'MLM', 'MSFT', 'NVDA'], 'TNK', 'XOM']
