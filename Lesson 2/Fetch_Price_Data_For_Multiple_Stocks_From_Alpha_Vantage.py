@@ -1,6 +1,5 @@
-#Generic Trading Algorithm
-
-#Lesson #2: Fetch price data for multiple stocks from Alpha Vantage
+#Lesson #2: Fetch price data for multiple stocks from Alpha Vantage (less than 5 stocks though)
+#Remember the API call limitation of 5 API calls/minute
 
 import pandas as pd
 import numpy as np
@@ -67,7 +66,11 @@ df_low_historical = pd.concat(low_list, axis=1, sort=True)
 df_close_historical = pd.concat(close_list, axis=1, sort=True)
 df_volume_historical = pd.concat(volume_list, axis=1, sort=True)
 
+#Drop any rows which have NaN values in them
+df_open_historical.dropna(axis=0, how='any', inplace=True)
+df_high_historical.dropna(axis=0, how='any', inplace=True)
+df_low_historical.dropna(axis=0, how='any', inplace=True)
 df_close_historical.dropna(axis=0, how='any', inplace=True)
+df_volume_historical.dropna(axis=0, how='any', inplace=True)
 
 print(df_close_historical)
-print(df_open_historical)
