@@ -1,4 +1,4 @@
-#Fetch cryptocurrency price data from Alpha Vantage
+#Lesson #3: Fetch cryptocurrency price data from Alpha Vantage
 
 import pandas as pd
 from alpha_vantage.timeseries import TimeSeries #You don't actually need to import this
