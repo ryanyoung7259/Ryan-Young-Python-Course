@@ -12,8 +12,8 @@ import pandas as pd
 import datetime
 
 #symbols_list = ['AAPL']
-symbols_list = ['AAPL', 'BMY']
-#symbols_list = ['AAPL', 'BMY', 'CRON', 'CSCO', 'FB', 'MLM', 'MSFT', 'NVDA', 'TNK', 'XOM']
+#symbols_list = ['AAPL', 'BMY']
+symbols_list = ['AAPL', 'BMY', 'CRON', 'CSCO', 'FB', 'MLM', 'MSFT', 'NVDA', 'TNK', 'XOM']
 
 #Login
     #You tried hiding username and password in a text file, but kept getting this error
@@ -33,7 +33,7 @@ symbols_list = ['AAPL', 'BMY']
     #proxies: Pass proxies={'http': ..., 'https': ...} to use a proxy when making a request. This is recommended when making asynchronous requests.
     #formatted: Pass formatted=True to receive most numeric data in the following form: 'price': {'raw': 126000000000, 'fmt': '$126B'} Default is False
     #username and password: If you subscribe to Yahoo Finance Premium, pass your username and password. You will be logged in and will now be able to access premium properties / methods. All premium properties / methods begin with p_. Disable two-factor authentication for this to work. You do not need to be logged in to access all other properties and methods.
-tickers = Ticker(symbols_list, asynchronous=False, max_workers=8, username='youngryan933@yahoo.com', password='youngryan933_Burner')
+tickers = Ticker(symbols_list, asynchronous=False, max_workers=8, username='YAHOO_EMAIL_ADDRESS', password='YAHOO_EMAIL_ADDRESS_PASSWORD')
 
 #Financial statement data
 #tickers.company_officers()
