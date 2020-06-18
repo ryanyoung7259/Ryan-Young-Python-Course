@@ -21,7 +21,7 @@ price_data_csv_file_path = python_script_path + "\\Alpaca_Price_Data.csv"
 #File path to .parquet file
 price_data_parquet_file_path = python_script_path + "\\Alpaca_Price_Data.parquet"
 
-alpaca_credentials = alpaca.REST('PKCMUV6NRFWW2RFAJDF4', 'ulDgzH2RQZpWDeu1oAIFqcGWVUupygXZHmlW64KZ', api_version='v2')
+alpaca_credentials = alpaca.REST('YOUR_API_KEY', 'YOUR_SECRET_KEY', api_version='v2')
 
 #symbols_list = ['AAPL']
 #symbols_list = ['AAPL', 'BMY', 'CSCO']
