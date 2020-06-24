@@ -76,7 +76,7 @@ for ticker in symbols_list:
     dividend_list.append(tickers_price_history_df4[f"{ticker}_dividends"])
     tickers_price_history_df_list.append(tickers_price_history_df4)
 
-#Close dataframe
+#Close price dataframe
 close_df1 = pd.concat(close_list, axis=1)
 print(close_df1)
 
