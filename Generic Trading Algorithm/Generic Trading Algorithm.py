@@ -92,85 +92,56 @@ class Generic_Trading_Algorithm():
 
             tickers_price_history_df1 = tickers_price_history_df_or_dict.reset_index()
 
-            ##Less efficient way of using try/except
-            #try:
-            #    for ticker in self.sp_500_symbols_list:
-            #        tickers_price_history_df2 = tickers_price_history_df1[tickers_price_history_df1['symbol'] == f"{ticker}"]
-            #        tickers_price_history_df2.loc[:, 'date'] = pd.to_datetime(tickers_price_history_df2.loc[:, 'date']).dt.date
-            #        tickers_price_history_df2 = tickers_price_history_df2.add_prefix(f"{ticker}_")
-            #        tickers_price_history_df2.drop([f"{ticker}_symbol"], axis=1, inplace=True)
-            #        tickers_price_history_df2.set_index(f"{ticker}_date", inplace=True)
-            #        tickers_price_history_df2.index.rename('Date', inplace=True)
-
-            #        open_list.append(tickers_price_history_df2[f"{ticker}_open"])
-            #        high_list.append(tickers_price_history_df2[f"{ticker}_high"])
-            #        low_list.append(tickers_price_history_df2[f"{ticker}_low"])
-            #        close_list.append(tickers_price_history_df2[f"{ticker}_close"])
-            #        adjusted_close_list.append(tickers_price_history_df2[f"{ticker}_adjclose"])
-            #        volume_list.append(tickers_price_history_df2[f"{ticker}_volume"])
-            #        dividend_list.append(tickers_price_history_df2[f"{ticker}_dividends"])
-            #except KeyError:
-            #    for ticker in self.sp_500_symbols_list:
-            #        tickers_price_history_df2 = tickers_price_history_df1[tickers_price_history_df1['symbol'] == f"{ticker}"]
-            #        tickers_price_history_df2.loc[:, 'date'] = pd.to_datetime(tickers_price_history_df2.loc[:, 'date']).dt.date
-            #        tickers_price_history_df2 = tickers_price_history_df2.add_prefix(f"{ticker}_")
-            #        tickers_price_history_df2.drop([f"{ticker}_symbol"], axis=1, inplace=True)
-            #        tickers_price_history_df2.set_index(f"{ticker}_date", inplace=True)
-            #        tickers_price_history_df2.index.rename('Date', inplace=True)
-
-            #        open_list.append(tickers_price_history_df2[f"{ticker}_open"])
-            #        high_list.append(tickers_price_history_df2[f"{ticker}_high"])
-            #        low_list.append(tickers_price_history_df2[f"{ticker}_low"])
-            #        close_list.append(tickers_price_history_df2[f"{ticker}_close"])
-            #        adjusted_close_list.append(tickers_price_history_df2[f"{ticker}_adjclose"])
-            #        volume_list.append(tickers_price_history_df2[f"{ticker}_volume"])
-
-            #        #Commented out the dividend line. All the other lines are the same as in the try section.
-            #        #dividend_list.append(tickers_price_history_df2[f"{ticker}_dividends"])
-
             for ticker in pbar(self.sp_500_symbols_list):
-                tickers_price_history_df2 = tickers_price_history_df1[tickers_price_history_df1['symbol'] == f"{ticker}"]
-                tickers_price_history_df2.loc[:, 'date'] = pd.to_datetime(tickers_price_history_df2.loc[:, 'date']).dt.date
-                tickers_price_history_df2 = tickers_price_history_df2.add_prefix(f"{ticker}_")
-                tickers_price_history_df2.drop([f"{ticker}_symbol"], axis=1, inplace=True)
-                tickers_price_history_df2.set_index(f"{ticker}_date", inplace=True)
-                tickers_price_history_df2.index.rename('Date', inplace=True)
-
-                open_list.append(tickers_price_history_df2[f"{ticker}_open"])
-                high_list.append(tickers_price_history_df2[f"{ticker}_high"])
-                low_list.append(tickers_price_history_df2[f"{ticker}_low"])
-                close_list.append(tickers_price_history_df2[f"{ticker}_close"])
-                adjusted_close_list.append(tickers_price_history_df2[f"{ticker}_adjclose"])
-                volume_list.append(tickers_price_history_df2[f"{ticker}_volume"])
-
-                #For stocks which don't offer dividends won't have dividend columns and so we have to handle the KeyError using try/except
+                #Error handling
+                    #KeyError
+                        #Stocks which don't offer dividends won't have dividend columns and so we have to handle the KeyError using try/except
+                    #AttributeError
+                        #Stocks which the algorithm is unable to scrape data for will raised an AttributeError. We will simply skip over those stocks.
                 try:
+                    tickers_price_history_df2 = tickers_price_history_df1[tickers_price_history_df1['symbol'] == f"{ticker}"]
+                    tickers_price_history_df2.loc[:, 'date'] = pd.to_datetime(tickers_price_history_df2.loc[:, 'date']).dt.date
+                    tickers_price_history_df2 = tickers_price_history_df2.add_prefix(f"{ticker}_")
+                    tickers_price_history_df2.drop([f"{ticker}_symbol"], axis=1, inplace=True)
+                    tickers_price_history_df2.set_index(f"{ticker}_date", inplace=True)
+                    tickers_price_history_df2.index.rename('Date', inplace=True)
+
+                    open_list.append(tickers_price_history_df2[f"{ticker}_open"])
+                    high_list.append(tickers_price_history_df2[f"{ticker}_high"])
+                    low_list.append(tickers_price_history_df2[f"{ticker}_low"])
+                    close_list.append(tickers_price_history_df2[f"{ticker}_close"])
+                    adjusted_close_list.append(tickers_price_history_df2[f"{ticker}_adjclose"])
+                    volume_list.append(tickers_price_history_df2[f"{ticker}_volume"])
                     dividend_list.append(tickers_price_history_df2[f"{ticker}_dividends"])
-                except KeyError:
-                    #If Python encounters a KeyError, do nothing (i.e., pass)
+                #If Python encounters a KeyError or AttributeError, do nothing (i.e., pass)
+                except (KeyError, AttributeError):
                     pass
 
         #Whenever we use a longer list like the S&P 500, yahooquery returns a dictionary of dataframes and so we would handle them like so
         else:
             for ticker in pbar(self.sp_500_symbols_list):
-                tickers_price_history_df1 = tickers_price_history_df_or_dict[f"{ticker}"]
-                tickers_price_history_df2 = tickers_price_history_df1.reset_index()
-                tickers_price_history_df2.loc[:, 'index'] = pd.to_datetime(tickers_price_history_df2.loc[:, 'index']).dt.date
-                tickers_price_history_df2.set_index('index', inplace=True)
-                tickers_price_history_df2.index.rename('Date', inplace=True)
-                tickers_price_history_df2 = tickers_price_history_df2.add_prefix(f"{ticker}_")
-
-                open_list.append(tickers_price_history_df2[f"{ticker}_open"])
-                high_list.append(tickers_price_history_df2[f"{ticker}_high"])
-                low_list.append(tickers_price_history_df2[f"{ticker}_low"])
-                close_list.append(tickers_price_history_df2[f"{ticker}_close"])
-                adjusted_close_list.append(tickers_price_history_df2[f"{ticker}_adjclose"])
-                volume_list.append(tickers_price_history_df2[f"{ticker}_volume"])
-                #For stocks which don't offer dividends won't have dividend columns and so we have to handle the KeyError using try/except
+                #Error handling
+                    #KeyError
+                        #Stocks which don't offer dividends won't have dividend columns and so we have to handle the KeyError using try/except
+                    #AttributeError
+                        #Stocks which the algorithm is unable to scrape data for will raised an AttributeError. We will simply skip over those stocks.
                 try:
+                    tickers_price_history_df1 = tickers_price_history_df_or_dict[f"{ticker}"]
+                    tickers_price_history_df2 = tickers_price_history_df1.reset_index()
+                    tickers_price_history_df2.loc[:, 'index'] = pd.to_datetime(tickers_price_history_df2.loc[:, 'index']).dt.date
+                    tickers_price_history_df2.set_index('index', inplace=True)
+                    tickers_price_history_df2.index.rename('Date', inplace=True)
+                    tickers_price_history_df2 = tickers_price_history_df2.add_prefix(f"{ticker}_")
+
+                    open_list.append(tickers_price_history_df2[f"{ticker}_open"])
+                    high_list.append(tickers_price_history_df2[f"{ticker}_high"])
+                    low_list.append(tickers_price_history_df2[f"{ticker}_low"])
+                    close_list.append(tickers_price_history_df2[f"{ticker}_close"])
+                    adjusted_close_list.append(tickers_price_history_df2[f"{ticker}_adjclose"])
+                    volume_list.append(tickers_price_history_df2[f"{ticker}_volume"])
                     dividend_list.append(tickers_price_history_df2[f"{ticker}_dividends"])
-                except KeyError:
-                    #If Python encounters a KeyError, do nothing (i.e., pass)
+                #If Python encounters a KeyError or AttributeError, do nothing (i.e., pass)
+                except (KeyError, AttributeError):
                     pass
 
         #Create open, high, low, close, adjusted close, volume, and dividend dataframes
@@ -187,6 +158,8 @@ class Generic_Trading_Algorithm():
 
     #Simple Moving Average (SMA)
     def calc_sma(self, close_price_dataframe: pd.DataFrame, period: int):
+
+        print(f"Calculating SMA ({period})...")
 
         sma_list = []
 
@@ -207,10 +180,14 @@ class Generic_Trading_Algorithm():
         sma_df1.loc[:, 'Date'] = original_index_list
         sma_df1 = sma_df1.set_index('Date')
 
+        print(f"Calculating SMA ({period})...DONE")
+
         return sma_df1
 
 
     def calc_bollinger_bands(self, close_price_dataframe: pd.DataFrame, timeperiod: int, nbdevup: int, nbdevdn: int, matype: int):
+
+        print(f"Calculating Bollinger Bands ({timeperiod})...")
 
         upper_bollinger_bands_list = []
         middle_bollinger_bands_list = []
@@ -261,6 +238,8 @@ class Generic_Trading_Algorithm():
         lower_bollinger_bands_df1.columns = lower_bollinger_bands_column_list
         lower_bollinger_bands_df1.loc[:, 'Date'] = original_index_list
         lower_bollinger_bands_df1 = lower_bollinger_bands_df1.set_index('Date')
+
+        print(f"Calculating Bollinger Bands ({timeperiod})...DONE")
 
         return upper_bollinger_bands_df1, middle_bollinger_bands_df1, lower_bollinger_bands_df1
 
