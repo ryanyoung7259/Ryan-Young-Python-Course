@@ -23,8 +23,10 @@ class Generic_Trading_Algorithm():
     def __init__(self):
 
 ###################################################################################################################################
-        self.yahoo_query_username = 'YAHOO_EMAIL_ADDRESS'
-        self.yahoo_query_password = 'YAHOO_EMAIL_ADDRESS_PASSWORD'
+        #self.yahoo_query_username = 'YAHOO_EMAIL_ADDRESS'
+        #self.yahoo_query_password = 'YAHOO_EMAIL_ADDRESS_PASSWORD'
+        self.yahoo_query_username = 'youngryan933@yahoo.com'
+        self.yahoo_query_password = 'youngryan933_Burner'
 ###################################################################################################################################
 
         #Fetch symbols list of all stocks in the S&P 500
@@ -44,6 +46,8 @@ class Generic_Trading_Algorithm():
 
 
     def get_stock_price_data_yahooquery(self):
+
+        print('Fetching stock price data...')
 
         #Yahooquery Login
             #You tried hiding username and password in a text file, but kept getting this error
@@ -152,6 +156,8 @@ class Generic_Trading_Algorithm():
         adjusted_close_df1 = pd.concat(adjusted_close_list, axis=1, sort=True)
         volume_close_df1 = pd.concat(volume_list, axis=1, sort=True)
         dividend_df1 = pd.concat(dividend_list, axis=1, sort=True)
+
+        print('Fetching stock price data...DONE')
 
         return open_df1, high_df1, low_df1, close_df1, adjusted_close_df1, volume_close_df1, dividend_df1
 
