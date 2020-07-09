@@ -287,9 +287,10 @@ def main():
     print(upper_twenty_bollinger_bands)
 
     end_time = timer()
-    seconds_total_time = end_time - start_time
-    minutes_total_time = seconds_total_time / 60
-    print(f"\n\nTotal minutes: {minutes_total_time}")
+    total_time = end_time - start_time
+    minutes, seconds = divmod(total_time, 60)
+    hours, minutes = divmod(minutes, 60)
+    print("\n\nTotal Run Time: %d:%02d:%02d" % (hours, minutes, seconds))
 
 
 if __name__ == "__main__":
