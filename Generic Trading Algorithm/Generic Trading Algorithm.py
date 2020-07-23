@@ -23,8 +23,8 @@ class Generic_Trading_Algorithm():
     def __init__(self):
 
 ###################################################################################################################################
-        #self.yahoo_query_username = 'YAHOO_EMAIL_ADDRESS'
-        #self.yahoo_query_password = 'YAHOO_EMAIL_ADDRESS_PASSWORD'
+        self.yahoo_query_username = 'YAHOO_EMAIL_ADDRESS'
+        self.yahoo_query_password = 'YAHOO_EMAIL_ADDRESS_PASSWORD'
 ###################################################################################################################################
 
         #Fetch symbols list of all stocks in the S&P 500
